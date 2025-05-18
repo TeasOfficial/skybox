@@ -1,7 +1,7 @@
 #pragma semicolon 1
 
 #define PLUGIN_AUTHOR "Deathknife"
-#define PLUGIN_VERSION "1.01"
+#define PLUGIN_VERSION "1.02"
 
 #include <sourcemod>
 #include <sdktools>
@@ -159,6 +159,7 @@ public void LoadSkybox() {
 
 public Action Cmd_Skybox(int client, int argc) {
 	gMenu.Display(client, MENU_TIME_FOREVER);
+	return Plugin_Continue;
 }
 
 public void SkyboxMenu(int client, int start) {
@@ -173,10 +174,13 @@ public int Handler_SkyboxMenu(Menu menu, MenuAction menuaction, int client, int 
 		
 		//Set skybox for client
 		SetSkybox(client, info);
+
+		PrintToChat(client, "\x07FFFFFF[\x0733ffbbSkyBox\x07FFFFFF] Your Skybox has been changed to \x07ff33dd%s", info);
 		
 		//Save as cookie
 		SetClientCookie(client, SkyboxCookie, info);
 		
 		if (OpenMenu.BoolValue)SkyboxMenu(client, GetMenuSelectionPosition());
 	}
+	return 0;
 }
